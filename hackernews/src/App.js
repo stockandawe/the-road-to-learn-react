@@ -23,8 +23,11 @@ class App extends Component {
     return (
       <div className="App">
         {
-          list.map(function(item) {
+          list.map(item => {
             return(
+              // Note: Don't use an array index which isn't a stable value.
+              // React will have a hard time identifying the items if their order changes.
+              // Use a stable value (e.g. objectID) returns from the data itself.
               <div key={item.objectID}>
                 <span><a href={item.url}>{item.title}</a></span>
                 <span>{item.author}</span>
