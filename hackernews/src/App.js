@@ -19,11 +19,19 @@ const list = [
   },
 ];
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list: list,
+    }
+  }
+
   render() {
     return (
       <div className="App">
         {
-          list.map(item => {
+          this.state.list.map(item => {
             return(
               // Note: Don't use an array index which isn't a stable value.
               // React will have a hard time identifying the items if their order changes.
