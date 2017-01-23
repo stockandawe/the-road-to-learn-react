@@ -18,15 +18,29 @@ const list = [
     objectID: 1,
   },
 ];
+
+
+// The following function could be updated to the following ES6 syntax:
+//const isSearched = (searchTerm) => (item) =>
+//!searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
+function isSearched(searchTerm) {
+  return function(item) {
+    // code to return true or false
+    return !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  }
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       list: list,
+      searchTerm: '',
     }
 
     this.onDismiss = this.onDismiss.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   onDismiss(id) {
@@ -35,11 +49,21 @@ class App extends Component {
     this.setState({ list: updatedLIst });
   }
 
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
+        <form>
+          <input
+            type="text"
+            onChange={this.onSearchChange}
+          />
+        </form>
         {
-          this.state.list.map(item => {
+          this.state.list.filter(isSearched(this.state.searchTerm)).map(item => {
             return(
               // Note: Don't use an array index which isn't a stable value.
               // React will have a hard time identifying the items if their order changes.
