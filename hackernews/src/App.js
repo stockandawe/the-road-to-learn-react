@@ -54,16 +54,19 @@ class App extends Component {
   }
 
   render() {
+    const { searchTerm, list } = this.state;
+
     return (
       <div className="App">
         <form>
           <input
             type="text"
+            value={searchTerm}
             onChange={this.onSearchChange}
           />
         </form>
         {
-          this.state.list.filter(isSearched(this.state.searchTerm)).map(item => {
+          list.filter(isSearched(searchTerm)).map(item => {
             return(
               // Note: Don't use an array index which isn't a stable value.
               // React will have a hard time identifying the items if their order changes.
